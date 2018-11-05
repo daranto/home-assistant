@@ -1,0 +1,14 @@
+#Motion Flur
+#- platform: mqtt
+#  device_class: motion
+#  state_topic: "hue/flur_sensor/presence"
+#  name: "Motion_Flur"
+#  payload_on: "true"
+#  payload_off: "false"
+#Motion Wohnzimmer
+#- platform: mqtt
+#  device_class: motion
+#  state_topic: "hue/wohnzimmer/presence"
+#  name: "Motion_Wohnzimmer"
+#  payload_on: "true"
+#  payload_off: "false"

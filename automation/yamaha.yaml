@@ -1,0 +1,170 @@
+- id: yamaha_on__licht_an_trigger_Yamaha
+  alias: Yamaha (on) -> Licht an
+  trigger:
+  - platform: template
+    value_template: '{% if is_state_attr(''media_player.yamahaav'', ''source'', ''FireTV'')
+      %}true{% endif %}'
+  - platform: template
+    value_template: '{% if is_state_attr(''media_player.yamahaav'', ''source'', ''PS4'')
+      %}true{% endif %}'
+  - platform: template
+    value_template: '{% if is_state_attr(''media_player.yamahaav'', ''source'', ''AV4'')
+      %}true{% endif %}'
+  - platform: template
+    value_template: '{% if is_state_attr(''media_player.yamahaav'', ''source'', ''GCast'') and not is_state_attr(''media_player.anlage'', ''app_name'', ''Spotify'')%}true{% endif %}'
+  condition:
+    condition: and
+    conditions:
+    - condition: numeric_state
+      entity_id: sensor.bewegungsmelder_wz_illuminance
+      below: 8000
+  action:
+  - service: scene.turn_on
+    entity_id: scene.tv_licht_an
+  - service: automation.turn_off
+    entity_id: automation.yamaha_on__licht_an
+  - service: automation.turn_off
+    entity_id: automation.yamaha_on__licht_an_2
+
+- id: yamaha_on_motion aus
+  alias: Yamaha (on) -> Motion aus
+  trigger:
+  - platform: template
+    value_template: '{% if is_state_attr(''media_player.yamahaav'', ''source'', ''FireTV'')
+      %}true{% endif %}'
+  - platform: template
+    value_template: '{% if is_state_attr(''media_player.yamahaav'', ''source'', ''PS4'')
+      %}true{% endif %}'
+  - platform: template
+    value_template: '{% if is_state_attr(''media_player.yamahaav'', ''source'', ''AV4'')
+      %}true{% endif %}'
+  - platform: template
+    value_template: '{% if is_state_attr(''media_player.yamahaav'', ''source'', ''GCast'') and not is_state_attr(''media_player.anlage'', ''app_name'', ''Spotify'')%}true{% endif %}'
+  action:
+  - service: automation.turn_off
+    entity_id: automation.motion__wohnzimmer_an
+  - service: automation.turn_off
+    entity_id: automation.motion__wohnzimmer_an_nacht
+  - service: automation.turn_off
+    entity_id: automation.motion__wohnzimmer_aus
+
+- id: yamaha_on__licht_an_trigger_lux
+  alias: Yamaha (on) -> Licht an 2
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.bewegungsmelder_wz_illuminance
+    below: 8000
+  condition:
+    - condition: or
+      conditions:
+        - condition: template
+          value_template: '{% if is_state_attr(''media_player.yamahaav'', ''source'', ''FireTV'')%}true{% endif %}'
+        - condition: template
+          value_template: '{% if is_state_attr(''media_player.yamahaav'', ''source'', ''PS4'')%}true{% endif %}'
+        - condition: template
+          value_template: '{% if is_state_attr(''media_player.yamahaav'', ''source'', ''AV4'')%}true{% endif %}'
+        - condition: template
+          value_template: '{% if is_state_attr(''media_player.yamahaav'', ''source'', ''GCast'') and not is_state_attr(''media_player.anlage'', ''app_name'', ''Spotify'')%}true{% endif %}'
+  action:
+  - service: scene.turn_on
+    entity_id: scene.tv_licht_an
+  - service: automation.turn_off
+    entity_id: automation.yamaha_on__licht_an
+  - service: automation.turn_off
+    entity_id: automation.yamaha_on__licht_an_2
+
+#Yamaha Licht aus
+- id: yamaha_off__licht_aus
+  alias: Yamaha (off) -> Licht aus
+  trigger:
+    platform: state
+    entity_id: media_player.yamahaav
+    to: 'off'
+  action:
+  - service: scene.turn_on
+    entity_id: scene.tv_licht_aus
+  - service: automation.turn_on
+    entity_id: automation.motion__wohnzimmer_an
+  - service: automation.turn_on
+    entity_id: automation.motion__wohnzimmer_an_nacht
+  - service: automation.turn_on
+    entity_id: automation.motion__wohnzimmer_aus
+  - service: homeassistant.turn_off
+    entity_id: media_player.anlage
+  - service: automation.turn_on
+    entity_id: automation.yamaha_on__licht_an
+  - service: automation.turn_on
+    entity_id: automation.yamaha_on__licht_an_2
+
+
+- id: yamaha_on__hyperion_an
+  alias: Yamaha (on) -> Hyperion an
+  trigger:
+  - platform: template
+    value_template: '{% if is_state_attr(''media_player.yamahaav'', ''source'', ''FireTV'')
+      %}true{% endif %}'
+  - platform: template
+    value_template: '{% if is_state_attr(''media_player.yamahaav'', ''source'', ''PS4'')
+      %}true{% endif %}'
+  - platform: template
+    value_template: '{% if is_state_attr(''media_player.yamahaav'', ''source'', ''GCast'') and not is_state_attr(''media_player.anlage'', ''app_name'', ''Spotify'')%}true{% endif %}'
+  action:
+  - service: switch.turn_on
+    entity_id: switch.hyperion
+
+- id: yamaha_off__hyperion_aus
+  alias: Yamaha (off) -> Hyperion aus
+  trigger:
+    platform: state
+    entity_id: media_player.yamahaav
+    to: 'off'
+  action:
+  - service: switch.turn_off
+    entity_id: switch.hyperion
+
+- id: Spotify_GCast_turn on Yamaha
+  alias: GCast Musik -> Yamaha an
+  trigger:
+    - platform: template
+      value_template: '{% if is_state_attr(''media_player.anlage'', ''app_name'', ''Spotify'') and
+       is_state("media_player.anlage", "playing") %}true{% endif %}'
+  action:
+  - service: media_player.turn_on
+    #change this to match your AVR
+    entity_id: media_player.yamahaav
+  - service: media_player.select_source
+    data:
+      #change this to match your AVR
+      entity_id: media_player.yamahaav
+      source: GCast
+#Airplay Effekt
+- id: Airplay_Party
+  alias: Airplay -> Hyperion Effekt
+  trigger:
+  - platform: template
+    value_template: '{% if is_state_attr(''media_player.yamahaav'', ''source'', ''AirPlay'')
+      %}true{% endif %}'
+  - platform: template
+    value_template: '{% if is_state_attr(''media_player.yamahaav'', ''source'', ''Spotify'')
+        %}true{% endif %}'
+  - platform: template
+    value_template: '{% if is_state_attr(''media_player.anlage'', ''app_name'', ''Spotify'') and
+     is_state("media_player.anlage", "playing") %}true{% endif %}'
+  action:
+  - service: shell_command.h_random
+
+
+- id: FireTV_Home_Press
+  alias: FireTV Home Press
+  trigger:
+  - platform: template
+    value_template: '{% if is_state_attr(''media_player.yamahaav'', ''source'', ''AV4'') %}true{% endif %}'
+  action:
+  - service: remote.send_command
+    entity_id: remote.wohnzimmerhub
+    data:
+      device: "51267398"
+      command:
+        - Stop
+        - Home
+      delay_secs: 5

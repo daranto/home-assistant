@@ -1,0 +1,74 @@
+- alias: sensor_values_to_file
+  initial_state: 'on'
+  trigger:
+    - platform: time
+      at: '23:59:55'
+  action:
+    - service: notify.filenotify
+      data_template:
+        message: "{{ states.sensor.working_time_format_robin.state }}"
+
+- id: robin_zuhause_message
+  alias: Robin Zuhause -> Message
+  trigger:
+  - platform: template
+    value_template: "{%if (is_state('device_tracker.daranto_mqtt_robin_iphone','home'))%}true{% endif %}"
+  action:
+  - service: notify.ios_iphone_robin
+    data:
+      title: "Information"
+      message: "Robin ist zuhause"
+
+- id: caro_zuhause_message
+  alias: Caro Zuhause -> Message
+  trigger:
+  - platform: template
+    value_template: "{%if (is_state('device_tracker.daranto_mqtt_caro_iphone','home'))%}true{% endif %}"
+  action:
+  - service: notify.ios_iphone_robin
+    data:
+      title: "Information"
+      message: "Caro ist zuhause"
+- id: arbeitszeit_robin
+  alias: Arbeitszeit -> Robin
+  trigger:
+  - platform: template
+    value_template: '{% if is_state_attr(''sensor.working_time_robin'', ''value'', ''8h 12m'')%}true{% endif %}'
+  action:
+    service: notify.ios_iphone_robin
+    data:
+      title: "Information"
+      message: "Arbeitszeit erreicht. Du kannst nach Hause fahren! :) Die Fahrtzeit nach Hause beträgt gerade: {{ states.sensor.waze_travel_time.state }} min!"
+
+- id: arbeitszeit_caro_mo_do
+  alias: Arbeitszeit -> Caro (Montag - Donnerstag)
+  trigger:
+  - platform: template
+    value_template: '{% if is_state_attr(''sensor.working_time_caro'', ''value'', ''8h 35m'')%}true{% endif %}'
+  condition:
+    condition: time
+    weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+  action:
+  - service: notify.ios_iphone_caro
+    data:
+      title: "Information"
+      message: "Arbeitszeit erreicht. Du kannst nach Hause fahren! :)"
+
+- id: arbeitszeit_caro_fr
+  alias: Arbeitszeit -> Caro (Freitag)
+  trigger:
+  - platform: template
+    value_template: '{% if is_state_attr(''sensor.working_time_caro'', ''value'', ''4h 30m'')%}true{% endif %}'
+  condition:
+    condition: time
+    weekday:
+      - fri
+  action:
+  - service: notify.ios_iphone_caro
+    data:
+      title: "Information"
+      message: "Arbeitszeit erreicht. Du kannst nach Hause fahren! :)"

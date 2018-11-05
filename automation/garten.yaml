@@ -1,0 +1,30 @@
+#Gartenbeleuchtung
+- id: gartenbeleuchtung_an_sonnenuntergang
+  alias: Gartenbeleuchtung an -> Sonnenuntergang
+  trigger:
+    platform: sun
+    event: sunset
+  action:
+    service: homeassistant.turn_on
+    entity_id: script.timed_lamp
+  initial_state: true
+
+- id: Krimmer_an
+  alias: Krimmer an um 20 Uhr
+  trigger:
+    platform: time
+    at: '20:00:00'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: switch.krimmer_kerzen
+  initial_state: false
+
+- id: Krimmer_aus
+  alias: Krimmer aus um 22 Uhr
+  trigger:
+    platform: time
+    at: '22:00:00'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: switch.krimmer_kerzen
+  initial_state: false

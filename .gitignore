@@ -1,0 +1,16 @@
+*
+!*.yaml
+!.gitignore
+*.conf
+*.txt
+*.log
+.storage
+.cloud
+.google.token
+.homekit
+ip_bans.yaml
+secrets.yaml
+known_devices.yaml
+!automation
+!hyperion
+!themes

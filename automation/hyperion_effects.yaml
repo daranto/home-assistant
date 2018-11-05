@@ -1,0 +1,168 @@
+- alias: Mood Blobs Blue
+  trigger:
+  - platform: state
+    entity_id: input_select.hyperion_effect
+    to: Mood Blobs Blue
+  action:
+    service: shell_command.h_mood_blobs_blue
+- alias: Knight Rider
+  trigger:
+  - platform: state
+    entity_id: input_select.hyperion_effect
+    to: Knight Rider
+  action:
+    service: shell_command.h_knight_rider
+- alias: Mood Blobs Cold
+  trigger:
+  - platform: state
+    entity_id: input_select.hyperion_effect
+    to: Mood Blobs Cold
+  action:
+    service: shell_command.h_mood_blobs_cold
+- alias: Mood Blobs Full Color
+  trigger:
+  - platform: state
+    entity_id: input_select.hyperion_effect
+    to: Mood Blobs Full Color
+  action:
+    service: shell_command.h_mood_blobs_full_color
+- alias: Mood Blobs Green
+  trigger:
+  - platform: state
+    entity_id: input_select.hyperion_effect
+    to: Mood Blobs Green
+  action:
+    service: shell_command.h_mood_blobs_green
+- alias: Mood Blobs Red
+  trigger:
+  - platform: state
+    entity_id: input_select.hyperion_effect
+    to: Mood Blobs Red
+  action:
+    service: shell_command.h_mood_blobs_red
+- alias: Mood Blobs Warm
+  trigger:
+  - platform: state
+    entity_id: input_select.hyperion_effect
+    to: Mood Blobs Warm
+  action:
+    service: shell_command.h_mood_blobs_warm
+- alias: Rainbow Mood
+  trigger:
+  - platform: state
+    entity_id: input_select.hyperion_effect
+    to: Mood Blobs Rainbow
+  action:
+    service: shell_command.h_rainbow_mood
+- alias: Rainbow Swirl
+  trigger:
+  - platform: state
+    entity_id: input_select.hyperion_effect
+    to: Rainbow Swirl
+  action:
+    service: shell_command.h_rainbow_swirl
+- alias: Strobe Blue
+  trigger:
+  - platform: state
+    entity_id: input_select.hyperion_effect
+    to: Strobe Blue
+  action:
+    service: shell_command.h_strobe_blue
+- alias: Strobe White
+  trigger:
+  - platform: state
+    entity_id: input_select.hyperion_effect
+    to: Strobe White
+  action:
+    service: shell_command.h_strobe_white
+- alias: Strobe Raspberry
+  trigger:
+  - platform: state
+    entity_id: input_select.hyperion_effect
+    to: Strobe Raspberry
+  action:
+    service: shell_command.h_strobe_raspberry
+- alias: Hyperion Off
+  trigger:
+  - platform: state
+    entity_id: input_select.hyperion_effect
+    to: 'Off'
+  action:
+    service: shell_command.h_hyperion_off
+- alias: Color Traces
+  trigger:
+  - platform: state
+    entity_id: input_select.hyperion_effect
+    to: Color Traces
+  action:
+    service: shell_command.h_color_traces
+- alias: Snake
+  trigger:
+  - platform: state
+    entity_id: input_select.hyperion_effect
+    to: Snake
+  action:
+    service: shell_command.h_snake
+- alias: Cinema Dim Lights
+  trigger:
+  - platform: state
+    entity_id: input_select.hyperion_effect
+    to: Cinema Dim Lights
+  action:
+    service: shell_command.h_cinema_dim_lights
+- alias: Cinema Brighten Lights
+  trigger:
+  - platform: state
+    entity_id: input_select.hyperion_effect
+    to: Cinema Brighten Lights
+  action:
+    service: shell_command.h_cinema_brighten_lights
+- alias: Police Lights Single
+  trigger:
+  - platform: state
+    entity_id: input_select.hyperion_effect
+    to: Police Lights Single
+  action:
+    service: shell_command.h_police_lights_single
+- alias: Random
+  trigger:
+  - platform: state
+    entity_id: input_select.hyperion_effect
+    to: Random
+  action:
+    service: shell_command.h_random
+- alias: Police Lights Solid
+  trigger:
+  - platform: state
+    entity_id: input_select.hyperion_effect
+    to: Police Lights Solid
+  action:
+    service: shell_command.h_police_lights_solid
+- alias: Running Dots
+  trigger:
+  - platform: state
+    entity_id: input_select.hyperion_effect
+    to: Running Dots
+  action:
+    service: shell_command.h_running_dots
+- alias: System Shutdown
+  trigger:
+  - platform: state
+    entity_id: input_select.hyperion_effect
+    to: System Shutdown
+  action:
+    service: shell_command.h_system_shutdown
+- alias: Sparks Color
+  trigger:
+  - platform: state
+    entity_id: input_select.hyperion_effect
+    to: Sparks Color
+  action:
+    service: shell_command.h_sparks_color
+- alias: Sparks
+  trigger:
+  - platform: state
+    entity_id: input_select.hyperion_effect
+    to: Sparks
+  action:
+    service: shell_command.h_sparks

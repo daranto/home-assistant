@@ -1,0 +1,4 @@
+- platform: file
+  name: filenotify
+  filename: arbeitszeit.csv
+  timestamp: true

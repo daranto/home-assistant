@@ -1,0 +1,184 @@
+- platform: pilight
+  switches:
+#    Nachttische:
+#      on_code:
+#        protocol: heitech
+#        systemcode: 31
+#        unitcode: 1
+#        'on': 1
+#      off_code:
+#        protocol: heitech
+#        systemcode: 31
+#        unitcode: 1
+ #       'off': 1
+#    Gitarre:
+#      on_code:
+#        protocol: heitech
+#        systemcode: 31
+#        unitcode: 2
+#        'on': 1
+#      off_code:
+#        protocol: heitech
+#        systemcode: 31
+#        unitcode: 2
+#        'off': 1
+#    Vitrine:
+#      on_code:
+#        protocol: heitech
+#        systemcode: 31
+#        unitcode: 4
+#        'on': 1
+#      off_code:
+#        protocol: heitech
+#        systemcode: 31
+#        unitcode: 4
+#        'off': 1
+#    Nachttische:
+#      on_code:
+#        protocol: heitech
+#        systemcode: 31
+#        unitcode: 8
+#        'on': 1
+#      off_code:
+#        protocol: heitech
+#        systemcode: 31
+#        unitcode: 8
+#        'off': 1
+    garten1:
+      on_code:
+        protocol: elro_800_switch
+        systemcode: 15
+        unitcode: 1
+        'on': 1
+      off_code:
+        protocol: elro_800_switch
+        systemcode: 15
+        unitcode: 1
+        'off': 1
+    garten2:
+      on_code:
+        protocol: elro_800_switch
+        systemcode: 15
+        unitcode: 2
+        'on': 1
+      off_code:
+        protocol: elro_800_switch
+        systemcode: 15
+        unitcode: 2
+        'off': 1
+    Ventilator Licht:
+      on_code:
+        protocol: raw
+        code: 283 849 283 849 283 849 283 849 283 283 849 283 849 283 849 283 849 283 849 849 283 849 283 849 283 283 849 283 849 283 849 283 849 9622
+      off_code:
+        protocol: raw
+        code: 282 846 282 846 282 846 282 846 282 282 846 282 846 282 846 282 846 282 846 846 282 846 282 846 282 846 282 846 282 846 282 846 282 9588
+    Ventilator Stufe 1:
+      on_code:
+        protocol: raw
+        code: 283 849 283 849 283 849 283 849 283 283 849 283 849 849 283 283 849 283 849 849 283 849 283 849 283 849 283 849 283 849 283 849 283 9622
+      off_code:
+        protocol: raw
+        code: 282 846 282 846 282 846 282 846 282 282 846 282 846 282 846 282 846 282 846 846 282 846 282 846 282 846 282 846 282 846 282 846 282 9588
+
+    Ventilator Stufe 2:
+      on_code:
+        protocol: raw
+        code: 364 756 364 784 364 784 364 756 364 756 392 756 364 364 756 364 756 364 756 784 364 784 364 784 364 784 364 784 364 784 364 784 364 9632
+      off_code:
+        protocol: raw
+        code: 0
+
+    Ventilator Stufe 4:
+      on_code:
+        protocol: raw
+        code: 283 849 283 849 283 849 283 849 283 849 283 283 849 283 849 283 849 283 849 849 283 849 283 849 283 849 283 849 283 849 283 849 283 9622
+      off_code:
+        protocol: raw
+        code: 0
+
+
+- platform: command_line
+  switches:
+     hyperion:
+       friendly_name: "Ambilight"
+       command_on: '/config/hyperion/hyperionon.sh'
+       command_off: '/config/hyperion/hyperionoff.sh'
+     #pihole_switch:
+      #  command_on: "curl -X GET 'http://192.168.1.20/admin/api.php?enable&auth='"
+      #  command_off: "curl -X GET 'http://192.168.1.20/admin/api.php?disable=600&auth='"
+      #  command_state: "curl -X GET 'http://192.168.1.20/admin/api.php?status'"
+      #  value_template: "{{ value_json.status == 'enabled' }}"
+     krimmer_status:
+       friendly_name: "Krimmer Status"
+       command_on: ''
+       command_off: ''
+     fan_bedroom_status:
+       friendly_name: "Schlafzimmer Fan Status"
+       command_on: ''
+       command_off: ''
+  #  reboot_hyperion:
+   #   command_on: "ssh root@192.168.1.142 'reboot'"
+    #  command_off: "ssh root@192.168.1.142 'killall hyperiond 2>/dev/null'"
+#- platform: command_line
+#  switches:
+#    reboot_hyperion:
+#      command_on: "ssh root@192.168.1.142 'reboot'"
+#      command_off: "ssh root@192.168.1.142 'killall hyperiond'"
+
+
+#- platform: rpi_rf
+#  gpio: 17
+#  switches:
+#    Vitrine:
+#      protocol: 1
+#      pulselength: 309
+#      code_on: 5201
+#      code_off: 5204
+#      signal_repetitions: 50
+#    Nachttische:
+#      protocol: 1
+#      pulselength: 309
+#      code_on: 5393
+#      code_off: 5396
+#      signal_repetitions: 30
+#    garten1:
+#      protocol: 1
+#      pulselength: 306
+#      code_on: 17745
+#      code_off: 17748
+#    garten2:
+#      protocol: 1
+#      pulselength: 306
+#      code_on: 20817
+#      code_off: 20820
+
+- platform: wake_on_lan
+  mac_address: "78-24-AF-37-E0-5F"
+  name: "Robin-PC"
+  host: 192.168.1.2
+  #turn_off:
+      #service: shell_command.shutdown_robinpc
+
+- platform: template
+  switches:
+    krimmer_kerzen:
+      value_template: "{{ is_state('switch.krimmer_status', 'on')}}"
+      turn_on:
+        service: script.turn_on
+        data:
+          entity_id: script.krimmer_an
+      turn_off:
+        service: script.turn_on
+        data:
+          entity_id: script.krimmer_aus
+    alarm:
+      value_template: "{{ is_state('script.alarm_timer_start', 'on')}}"
+      turn_on:
+        service: script.turn_on
+        data:
+          entity_id: script.alarm_timer_start
+      turn_off:
+        service: script.turn_on
+        data:
+          entity_id: script.alarm_timer_stop

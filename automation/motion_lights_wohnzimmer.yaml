@@ -1,0 +1,131 @@
+#Motion Tag
+- id: wohnzimmer_an_tag
+  alias: Motion -> Wohnzimmer an
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.bewegungsmelder_wz_occupancy
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.motion_disabled
+      state: 'off'
+    - condition: numeric_state
+      entity_id: sensor.bewegungsmelder_wz_illuminance
+      below: 7000
+    - condition: time
+      after: '08:00:00'
+      before: '23:00:00'
+  action:
+  - service: scene.turn_on
+    entity_id: scene.licht_an_motion
+  - service: homeassistant.turn_on
+    entity_id: input_boolean.motion
+
+#Motion Nacht
+- id: wohnzimmer_an_nacht
+  alias: Motion -> Wohnzimmer an (nacht)
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.bewegungsmelder_wz_occupancy
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.motion_disabled
+      state: 'off'
+    - condition: numeric_state
+      entity_id: sensor.bewegungsmelder_wz_illuminance
+      below: 7000
+    - condition: time
+      after: '23:00:00'
+      before: '8:00:00'
+  action:
+  - service: scene.turn_on
+    entity_id: scene.licht_an_motion_nacht
+  - service: homeassistant.turn_on
+    entity_id: input_boolean.motion
+
+#Wenn keine Bewegung licht aus.
+- id: wohnzimmer_aus
+  alias: Motion -> Wohnzimmer aus
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.bewegungsmelder_wz_occupancy
+    to: 'off'
+    for:
+      minutes: 5
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.motion
+      state: 'on'
+  action:
+  - service: scene.turn_on
+    entity_id: scene.licht_aus_motion
+  - service: homeassistant.turn_off
+    entity_id: input_boolean.motion
+
+#Time Motion
+- id: motion_activate_time
+  alias: Motion aktivieren um 4 Uhr
+  trigger:
+    platform: time
+    at: '04:30:00'
+  action:
+  - service: homeassistant.turn_off
+    entity_id: input_boolean.motion_disabled
+
+#Motion disabled to off
+- id: motion_disabled_switch_off
+  alias: Motion wieder aktivieren
+  trigger:
+    platform: state
+    entity_id: input_boolean.motion_disabled
+    to: 'off'
+  action:
+  - service: automation.turn_on
+    entity_id: automation.motion__wohnzimmer_an
+  - service: automation.turn_on
+    entity_id: automation.motion__wohnzimmer_an_nacht
+  - service: automation.turn_on
+    entity_id: automation.motion__wohnzimmer_aus
+  - service: automation.turn_on
+    entity_id: automation.yamaha_on__licht_an
+  - service: automation.turn_on
+    entity_id: automation.yamaha_on__licht_an_2
+  - service: automation.turn_on
+    entity_id: automation.yamaha_off__licht_aus
+
+#Motion disabled to on
+- id: motion_disabled_switch_on
+  alias: Motion deaktivieren
+  trigger:
+    platform: state
+    entity_id: input_boolean.motion_disabled
+    to: 'on'
+  action:
+  - service: automation.turn_off
+    entity_id: automation.motion__wohnzimmer_an
+  - service: automation.turn_off
+    entity_id: automation.motion__wohnzimmer_an_nacht
+  - service: automation.turn_off
+    entity_id: automation.motion__wohnzimmer_aus
+  - service: automation.turn_off
+    entity_id: automation.yamaha_on__licht_an
+  - service: automation.turn_off
+    entity_id: automation.yamaha_on__licht_an_2
+  - service: automation.turn_off
+    entity_id: automation.yamaha_off__licht_aus
+
+- id: esstich_normal
+  alias: Esstich -> Tageslicht
+  trigger:
+    platform: time
+    at: '09:00:00'
+  action:
+  - service: script.turn_on
+    entity_id: script.timed_esstisch

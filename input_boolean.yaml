@@ -1,0 +1,19 @@
+motion_disabled:
+  name: motion_disabled
+  initial: off
+motion:
+  name: motion
+  initial: off
+motion_flur:
+  name: motion_flur
+  initial: off
+#fake_motion_flur:
+#  name: Flur Bewegunsmelder
+#  initial: off
+#fake_motion_wohnzimmer:
+#  name: Wohnzimmer Bewegunsmelder
+#  initial: off
+zigbee_permit_join:
+  name: Allow devices to join
+  initial: off
+  icon: mdi:cellphone-wireless

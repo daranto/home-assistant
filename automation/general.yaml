@@ -1,0 +1,10 @@
+#Set Theme
+- id: Set Theme
+  trigger:
+  - event: start
+    platform: homeassistant
+  action:
+  - data:
+      name: midnight
+    service: frontend.set_theme
+  alias: Theme

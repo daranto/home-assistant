@@ -1,0 +1,85 @@
+- id: Hue_remote1_button1_press
+  alias: Hue_remote1_button1_press
+  trigger:
+      platform: state
+      entity_id: sensor.taster_wz
+      to: 'on'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: scene.licht_an
+
+- id: Hue_remote1_button2_press
+  alias: Hue_remote1_button2_press
+  trigger:
+      platform: state
+      entity_id: sensor.taster_wz
+      to: 'up-press'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: scene.esstisch_hell
+
+- id: Hue_remote1_button3_press
+  alias: Hue_remote1_button3_press
+  trigger:
+      platform: state
+      entity_id: sensor.taster_wz
+      to: 'down-press'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: scene.tv_licht_an
+
+- id: Hue_remote1_button4_press
+  alias: Hue_remote1_button4_press
+  trigger:
+      platform: state
+      entity_id: sensor.taster_wz
+      to: 'off'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: scene.licht_aus
+
+#- id: Hue_remote1_button1_long_press
+#  alias: Hue_remote1_button1_long_press
+#  trigger:
+#      platform: event
+#      event_type: deconz_event
+#      event_data:
+#        id: schalter_wohnzimmer
+#        event: 1001
+#  action:
+#    - service: homeassistant.turn_off
+#      entity_id: input_boolean.motion_disabled
+
+#- id: Hue_remote1_button2_long_press
+#  trigger:
+#    - platform: mqtt
+#      topic: hue/hue_dimmer_switch_1/buttonevent
+#      payload: '2002'
+#  action:
+#    - service: homeassistant.turn_on
+#      entity_id: scene.esstisch_hell
+#    - service: homeassistant.turn_on
+#      entity_id: input_boolean.motion_disabled
+
+#- id: Hue_remote1_button3_long_press
+#  trigger:
+#    - platform: mqtt
+#      topic: hue/hue_dimmer_switch_1/buttonevent
+#      payload: '3002'
+#  action:
+#    - service: homeassistant.turn_on
+#      entity_id: scene.tv_licht_an
+#    - service: homeassistant.turn_off
+#      entity_id: input_boolean.motion_disabled
+
+- id: Hue_remote1_button4_long_press
+  alias: Hue_remote1_button4_long_press
+  trigger:
+      platform: event
+      event_type: deconz_event
+      event_data:
+        id: schalter_wohnzimmer
+        event: 4001
+  action:
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.motion_disabled

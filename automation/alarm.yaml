@@ -1,0 +1,67 @@
+# - id: Alarm_deaktivieren
+  # alias: Alarm deaktivieren
+  # initial_state: false
+  # trigger:
+   # - platform: state
+     # entity_id: device_tracker.iphone_fritz_robin
+     # to: 'Home'
+   # - platform: state
+     # entity_id: device_tracker.iphone_fritz_caro
+     # to: 'Home'
+  # action:
+     # - service: switch.turn_off
+       # entity_id: switch.alarm
+
+# - id: Alarm_Bewegung_erkannt
+  # alias: Alarm!!! Bewegung erkannt (Keiner zuhause)
+  # initial_state: false
+  # trigger:
+    # - platform: state
+      # entity_id: binary_sensor.bewegungsmelder_flur
+      # to: 'on'
+    # - platform: state
+      # entity_id: binary_sensor.bewegungsmelder_wohnzimmer
+      # to: 'on'
+  # condition:
+    # condition: and
+    # conditions:
+      # - condition: state
+        # entity_id: device_tracker.iphone_fritz_robin
+        # state: 'not_home'
+      # - condition: state
+        # entity_id: device_tracker.iphone_fritz_caro
+        # state: 'not_home'
+  # action:
+     # - service: switch.turn_on
+       # entity_id: switch.alarm
+
+- id: Alarm_deaktivieren
+  alias: Alarm deaktivieren
+  initial_state: true
+  trigger:
+   - platform: template
+     value_template: "{%if (is_state('device_tracker.daranto_mqtt_robin_iphone','home'))%}true{% endif %}"
+   - platform: template
+     value_template: "{%if (is_state('device_tracker.daranto_mqtt_caro_iphone','home'))%}true{% endif %}"
+  action:
+     - service: switch.turn_off
+       entity_id: switch.alarm
+
+- id: Alarm_Bewegung_erkannt
+  alias: Alarm!!! Bewegung erkannt (Keiner zuhause)
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.bewegungsmelder_fl_occupancy
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.bewegungsmelder_wz_occupancy
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{%if (not is_state('device_tracker.daranto_mqtt_robin_iphone','home') and (not is_state('device_tracker.daranto_mqtt_caro_iphone','home'))) %}true{% endif %}"
+  action:
+     - service: switch.turn_on
+       entity_id: switch.alarm

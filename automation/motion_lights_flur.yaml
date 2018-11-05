@@ -1,0 +1,158 @@
+#Motion Tag Trigger Bewegung
+- id: flur_an_tag
+  alias: Motion -> Flur an
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.bewegungsmelder_fl_occupancy
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+    - condition: numeric_state
+      entity_id: sensor.bewegungsmelder_fl_illuminance
+      below: 7000
+    - condition: time
+      after: '05:15:00'
+      before: '23:00:00'
+  action:
+  - service: scene.turn_on
+    entity_id: scene.licht_an_flur_tag
+  - service: homeassistant.turn_on
+    entity_id: input_boolean.motion_flur
+
+#Motion Tag Trigger Licht
+- id: flur_an_tag_lux
+  alias: Motion -> Flur an (lux)
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.bewegungsmelder_fl_illuminance
+    below: 7000
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.bewegungsmelder_fl_occupancy
+      state: 'on'
+    - condition: time
+      after: '05:15:00'
+      before: '23:00:00'
+  action:
+  - service: scene.turn_on
+    entity_id: scene.licht_an_flur_tag
+  - service: homeassistant.turn_on
+    entity_id: input_boolean.motion_flur
+
+#Motion Nacht Trigger Bewegung
+- id: flur_an_nacht
+  alias: Motion -> flur an (nacht)
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.bewegungsmelder_fl_occupancy
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+    - condition: numeric_state
+      entity_id: sensor.bewegungsmelder_fl_illuminance
+      below: 7
+    - condition: time
+      after: '23:00:00'
+      before: '05:15:00'
+  action:
+  - service: scene.turn_on
+    entity_id: scene.licht_an_flur_nacht
+  - service: homeassistant.turn_on
+    entity_id: input_boolean.motion_flur
+
+#Motion Nacht Trigger Licht
+- id: flur_an_nacht
+  alias: Motion -> flur an (nacht - lux)
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.bewegungsmelder_fl_illuminance
+    below: 7000
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.bewegungsmelder_fl_occupancy
+      state: 'on'
+    - condition: time
+      after: '23:00:00'
+      before: '05:15:00'
+  action:
+  - service: scene.turn_on
+    entity_id: scene.licht_an_flur_nacht
+  - service: homeassistant.turn_on
+    entity_id: input_boolean.motion_flur
+
+#Wenn keine Bewegung licht aus.
+- id: flur_aus_normal
+  alias: Motion -> flur normal aus
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.bewegungsmelder_fl_occupancy
+    to: 'off'
+    for:
+      minutes: 1
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.motion_flur
+      state: 'on'
+    - condition: time
+      after: '05:15:00'
+      #before: '17:00:00' #Für Stern aktivieren
+      before: '23:00:00'
+  action:
+  - service: homeassistant.turn_off
+    entity_id: light.flur
+  - service: homeassistant.turn_off
+    entity_id: input_boolean.motion_flur
+
+- id: flur_aus_nacht
+  alias: Motion -> flur aus nacht
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.bewegungsmelder_fl_occupancy
+    to: 'off'
+    for:
+      minutes: 1
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.motion_flur
+      state: 'on'
+    - condition: time
+      after: '23:00:00'
+      before: '05:15:00'
+  action:
+  - service: homeassistant.turn_off
+    entity_id: light.flur
+  - service: homeassistant.turn_off
+    entity_id: input_boolean.motion_flur
+
+#- id: flur_aus_stern
+#  alias: Motion -> flur aus stern
+#  trigger:
+#  - platform: state
+#    entity_id: binary_sensor.bewegungsmelder_fl_occupancy
+#    to: 'off'
+#    for:
+#      minutes: 1
+#  condition:
+#    condition: and
+#    conditions:
+#    - condition: state
+#      entity_id: input_boolean.motion_flur
+#      state: 'on'
+#    - condition: time
+#      after: '17:00:00'
+#      before: '23:00:00'
+#  action:
+#  - service: scene.turn_on
+#    entity_id: scene.licht_an_flur_stern
+#  - service: homeassistant.turn_off
+#    entity_id: input_boolean.motion_flur

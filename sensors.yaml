@@ -1,0 +1,147 @@
+
+- platform: systemmonitor
+  resources:
+    - type: memory_free
+    - type: processor_use
+
+- platform: history_stats
+  name: working_time_robin
+  entity_id: device_tracker.daranto_mqtt_robin_iphone
+  state: 'KM'
+  type: time
+  start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  end: '{{ now() }}'
+- platform: history_stats
+  name: working_time_caro
+  entity_id: device_tracker.daranto_mqtt_caro_iphone
+  state: 'Büro'
+  type: time
+  start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  end: '{{ now() }}'
+
+- platform: template
+  sensors:
+    working_time_format_robin:
+      friendly_name: "Robin"
+      unit_of_measurement: ''
+      value_template: "{{ states.sensor.working_time_robin.attributes.value }}"
+- platform: template
+  sensors:
+    working_time_format_caro:
+      friendly_name: "Carolin"
+      unit_of_measurement: ''
+      value_template: "{{ states.sensor.working_time_caro.attributes.value }}"
+#Flur Temp und Lux
+#- platform: mqtt
+#  state_topic: "hue/hue_ambient_light_sensor_1/lightlevel"
+#  name: "Flur Lux"
+#  unit_of_measurement: "Lux"
+#  value_template: "{{  value  }}"
+#- platform: mqtt
+#  state_topic: "hue/hue_temperature_sensor_1/temperature"
+#  name: "Flur Temperatur"
+#  unit_of_measurement: "°C"
+#  value_template: "{{  value | round(-1) | float / 100 }}"
+#Wohnzimmer Temp und Lux
+#- platform: mqtt
+#  state_topic: "hue/hue_ambient_light_sensor_2/lightlevel"
+#  name: "Wohnzimmer Lux"
+#  unit_of_measurement: "Lux"
+#  value_template: "{{  value  }}"
+#- platform: mqtt
+#  state_topic: "hue/hue_temperature_sensor_2/temperature"
+#  name: "Wohnzimmer Temperatur"
+#  unit_of_measurement: "°C"
+#  value_template: "{{  value | round(-1) | float / 100 }}"
+#- platform: hue_sensors
+#  scan_interval: 60
+#- platform: template
+#  sensors:
+#    wohnzimmer_temperature:
+#      friendly_name: 'Wohnzimmer Temperatur'
+#      value_template: '{{states.sensor.motion_wohnzimmer.attributes.temperature}}'
+#      unit_of_measurement: °C
+#    wohnzimmer_light_level:
+#      friendly_name: 'Wohnzimmer Lux'
+#      value_template: '{{states.sensor.motion_wohnzimmer.attributes.light_level}}'
+#      unit_of_measurement: Lux
+#    flur_temperature:
+#      friendly_name: 'Flur Temperatur'
+#      value_template: '{{states.sensor.flur_motion_sensor.attributes.temperature}}'
+#      unit_of_measurement: °C
+#    flur_light_level:
+#      friendly_name: 'Flur Lux'
+#      value_template: '{{states.sensor.flur_motion_sensor.attributes.light_level}}'
+#      unit_of_measurement: Lux
+
+#- platform: template
+#  sensors:
+#      fritz_box_ip:
+#          #unit_of_measurement: '%'
+#          friendly_name: "Externe IP"
+#          value_template: {{ states.sensor.fritz_netmonitor.attributes.external_ip }}
+
+#Flur
+#- platform: rest
+#  resource: http://192.168.1.168/api/key/sensors/5
+#  value_template: '{{ value_json.state.lightlevel }}'
+#  unit_of_measurement: Lux
+#  name: 'Flur Lux'
+
+#- platform: rest
+#  resource: http://192.168.1.168/api/key/sensors/3
+#  value_template: '{{ value_json.state.temperature | round(-1) | float / 100 }}'
+#  unit_of_measurement: °C
+#  name: 'Flur Temperatur'
+#Wohnzimmer
+#- platform: rest
+#  resource: http://192.168.1.168/api/key/sensors/8
+#  value_template: '{{ value_json.state.presence }}'
+#  scan_interval: 2
+#  name: 'Wohnzimmer Bewegung erkannt'
+
+#- platform: rest
+#  resource: http://192.168.1.168/api/key/sensors/9
+#  value_template: '{{ value_json.state.lightlevel }}'
+#  unit_of_measurement: Lux
+#  name: 'Wohnzimmer Lux'
+#- platform: rest
+#  resource: http://192.168.1.168/api/key/sensors/7
+#  value_template: '{{ value_json.state.temperature | round(-1) | float / 100 }}'
+#  unit_of_measurement: °C
+#  name: 'Wohnzimmer Temperatur'
+
+#Adblocker
+#- platform: pi_hole
+#  host: 192.168.1.20
+#  monitored_conditions:
+#    - dns_queries_today
+#    - ads_blocked_today
+#    - ads_percentage_today
+#Router Infos
+#- platform: fritzbox_netmonitor
+#Speedtest
+#- platform: speedtest
+#  server_id: 7562
+#  monitored_conditions:
+#    - ping
+#    - download
+#    - upload
+- platform: waze_travel_time
+  origin: device_tracker.daranto_mqtt_robin_iphone
+  destination: zone.home
+  region: 'EU'
+
+- platform: darksky
+  api_key: !secret darksky_api_key
+  language: de
+  monitored_conditions:
+    - summary
+    - icon
+    - nearest_storm_distance
+    - temperature
+    - humidity
+- platform: mqtt
+  name: Bridge state
+  state_topic: "zigbee2mqtt/bridge/state"
+  icon: mdi:router-wireless

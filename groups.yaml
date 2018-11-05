@@ -1,0 +1,182 @@
+default_view:
+  view: true
+  entities:
+  - device_tracker.iphone_fritz_robin
+  - device_tracker.iphone_fritz_caro
+  - device_tracker.daranto_mqtt_robin_iphone
+  - device_tracker.daranto_mqtt_caro_iphone
+  - configurator.philips_hue
+  - group.start
+  - group.arbeitszeit
+wohnzimmer_view:
+  view: true
+  name: Wohnzimmer
+  entities:
+  - group.wohnzimmer
+  - media_player.yamahaav
+  - media_player.tv
+  - media_player.anlage
+  - group.hue
+  - group.hue_scenen
+  - group.hyperion
+  - group.sensor_wohnzimmer
+schlafzimmer_view:
+  view: true
+  name: Schlafzimmer
+  entities:
+  - group.schlafzimmer_licht
+  - group.schlafzimmer_scene
+  - group.schlafzimmer_ventilator
+flur_view:
+  view: true
+  name: Flur
+  entities:
+  - group.flur
+badezimmer_view:
+  view: true
+  name: Badezimmer
+  entities:
+  - group.badezimmer
+garten_view:
+  view: true
+  name: Garten
+  entities:
+  - group.garten
+Media_Player_view:
+  view: true
+  name: Media Player
+  entities:
+    - media_player.anlage
+    - media_player.yamahaav
+    - media_player.spotify
+    - media_player.bad
+automatisierung_view:
+  view: true
+  name: Automatisierung
+  entities:
+  - sun.sun
+  - group.scripts
+  - group.fritz_box
+  - group.speedtest
+  - group.all_automations
+  - group.hw_monitor
+  - group.zigbee_group
+  - switch.alarm
+arbeitszeit:
+  name: Arbeitszeiten
+  entities:
+#  - sensor.working_time_robin
+#  - sensor.working_time_caro
+  - sensor.working_time_format_robin
+  - sensor.working_time_format_caro
+wohnzimmer:
+  name: Licht
+  entities:
+  - scene.licht_an
+  - scene.licht_aus
+  - switch.steckdose
+  - input_boolean.motion_disabled
+  - switch.krimmer_kerzen
+hyperion:
+  name: Ambilight
+  entities:
+  - switch.hyperion
+  - input_select.hyperion_effect
+badezimmer:
+  name: Badezimmer
+  entities:
+  - media_player.bad
+schlafzimmer_licht:
+  name: Licht
+  entities:
+  - light.nachttisch_caro
+  - light.nachttisch_robin
+schlafzimmer_scene:
+  name: Scenen
+  entities:
+  - script.timed_nachtlicht
+schlafzimmer_ventilator:
+  name: Ventilator
+  entities:
+  - switch.ventilator_licht
+  - scene.ventilator_aus
+  - scene.ventilator_stufe_1
+  - scene.ventilator_stufe_2
+  - scene.ventilator_stufe_4
+  - input_number.ventilator_slider
+  - script.ventilator_timer_stufe_1
+  - script.ventilator_timer_stufe_2
+garten:
+  name: Garten Licht
+  entities:
+  - switch.garten1
+  - switch.garten2
+scripts:
+  name: Scripte
+  entities:
+  - switch.robinpc
+  - script.timed_lamp
+  - script.timed_nachtlicht
+  - script.party_hue
+hue:
+  name: Hue
+  entities:
+  - light.esstisch
+  - light.gitarre
+  - light.sofa
+  - light.stehlampe
+  - light.Flur
+hue_scenen:
+  name: Hue Scenen
+  entities:
+  - script.lesen
+  - script.essen
+  - script.konzentration
+  - script.gedimmt
+start:
+  name: Allgemein
+  entities:
+  - script.timed_nachtlicht
+  - script.gedimmt
+  - script.essen
+  - script.party_hue
+flur:
+  name: "Flur"
+  entities:
+  - light.flur
+  - binary_sensor.bewegungsmelder_fl_occupancy
+  - sensor.bewegungsmelder_fl_illuminance
+  - sensor.bewegungsmelder_fl_temperature
+
+pihole:
+  name: Ad Blocker
+  entities:
+  - switch.pihole_switch
+  - sensor.pihole_dns_queries_today
+  - sensor.pihole_ads_percentage_blocked_today
+sensor_wohnzimmer:
+  name: Sensoren
+  entities:
+  - binary_sensor.bewegungsmelder_wz_occupancy
+  - sensor.bewegungsmelder_wz_illuminance
+  - sensor.bewegungsmelder_wz_temperature
+fritz_box:
+  name: Fritz-Box
+  entities:
+  - sensor.fritz_netmonitor
+Speedtest:
+  - sensor.speedtest_download
+  - sensor.speedtest_upload
+  - sensor.speedtest_ping
+
+hw_monitor:
+   name: HW-Monitor
+   entities:
+   - sensor.processor_use
+   - sensor.memory_free
+zigbee_group:
+   name: Zigbee
+   entities:
+   - input_boolean.zigbee_permit_join
+   - timer.zigbee_permit_join
+   - sensor.bridge_state

@@ -1,0 +1,205 @@
+- name: Licht aus
+  entities:
+      switch.steckdose: off
+      light.sofa: 
+        state: off
+        transition: "1"
+      light.esstisch:
+        state: off
+        transition: "1"
+      light.gitarre: 
+        state: off
+        transition: "1"
+      light.stehlampe:
+        state: off
+        transition: "1"
+- name: Licht aus_motion
+  entities:
+      light.esstisch:
+        state: off
+        transition: "1"
+      light.gitarre:
+        state: off
+        transition: "1"
+      light.stehlampe:
+        state: off
+        transition: "1"
+- name: Licht an
+  entities:
+      switch.steckdose: on
+      light.esstisch:
+        state: on
+        brightness: 254
+        color_temp: 366
+        transition: "1"
+      light.gitarre:
+        state: on
+        brightness: 254
+        color_temp: 366
+        transition: "1"
+      light.stehlampe:
+        state: on
+        brightness: 254
+        color_temp: 366
+        transition: "1"
+      light.sofa:
+        state: on
+        brightness: 254
+        #xy_color: [ 0.6724,0.3237 ]
+        xy_color: [ 0.3945,0.2932 ]
+        transition: "1"
+- name: Licht an_motion
+  entities:
+      light.esstisch:
+        state: on
+        brightness: 254
+        color_temp: 366
+        transition: "1"
+      light.gitarre:
+        state: on
+        brightness: 254
+        color_temp: 366
+        transition: "1"
+      light.stehlampe:
+        state: on
+        brightness: 254
+        color_temp: 366
+        transition: "1"
+- name: Licht an_motion_nacht
+  entities:
+      light.esstisch:
+        state: on
+        brightness: 5
+        xy_color: [ 0.561,0.4042 ]
+        transition: "1"
+      light.gitarre:
+        state: off
+        transition: "1"
+      light.stehlampe:
+        state: off
+        transition: "1"
+
+- name: Licht_an_flur_tag
+  entities:
+      light.flur:
+        state: on
+        brightness: 254
+        xy_color: [ 0.4059,0.3921 ]
+        transition: "1"
+
+- name: Licht_an_flur_nacht
+  entities:
+      light.flur:
+        state: on
+        brightness: 5
+        xy_color: [ 0.561,0.4042 ]
+        transition: "1"
+
+- name: Licht_an_flur_stern
+  entities:
+      light.gitarre:
+        state: on
+        brightness: 51
+        xy_color: [ 0.6894,0.3073 ]
+        transition: "1"
+
+- name: TV Licht An
+  entities:
+      switch.steckdose: on
+      light.esstisch:
+        state: on
+        brightness: 76
+        color_temp: 366
+        transition: "1"
+      light.gitarre:
+        state: on
+        brightness: 76
+        color_temp: 366
+        transition: "1"
+      light.stehlampe:
+        state: on
+        brightness: 76
+        color_temp: 366
+        transition: "1"
+      light.sofa:
+        state: on
+        brightness: 254
+        #xy_color: [ 0.6724,0.3237 ]
+        xy_color: [ 0.3945,0.2932 ]
+        transition: "1"
+
+- name: esstisch_hell
+  entities:
+      light.esstisch:
+        state: on
+        brightness: 254
+        xy_color: [ 0.4452,0.4068 ]
+        transition: "1"
+      light.sofa:
+        state: on
+        brightness: 254
+        #xy_color: [ 0.6724,0.3237 ]
+        xy_color: [ 0.3945,0.2932 ]
+        transition: "1"
+      switch.steckdose: on
+      light.stehlampe:
+        state: off
+        transition: "1"
+      light.gitarre:
+        state: on
+        brightness: 76
+        color_temp: 366
+        transition: "1"
+- name: esstisch_reset
+  entities:
+      light.esstisch:
+        state: on
+        brightness: 254
+        xy_color: [ 0.4452,0.4068 ]
+        transition: "1"
+
+- name: TV Licht Aus
+  entities:
+      switch.steckdose: off
+      light.sofa:
+        state: off
+        transition: "1"
+      light.esstisch:
+        state: off
+        transition: "1"
+      light.gitarre:
+        state: off
+        transition: "1"
+      light.stehlampe:
+        state: off
+        transition: "1"
+
+- name: Ventilator Stufe 1
+  entities:
+      switch.ventilator_stufe_1: on
+      switch.ventilator_stufe_2: off
+      switch.ventilator_stufe_4: off
+
+- name: Ventilator Stufe 2
+  entities:
+      switch.ventilator_stufe_1: off
+      switch.ventilator_stufe_2: on
+      switch.ventilator_stufe_4: off
+
+- name: Ventilator aus
+  entities:
+      switch.ventilator_stufe_1: off
+      switch.ventilator_stufe_2: off
+      switch.ventilator_stufe_4: off
+
+- name: Ventilator Stufe 4
+  entities:
+      switch.ventilator_stufe_1: off
+      switch.ventilator_stufe_2: off
+      switch.ventilator_stufe_4: on
+#- name: Nachtlicht
+#  entities:
+#      script.timed_nachtlicht: on
+#- name: Essen
+#  entities:
+#      script.essen: on

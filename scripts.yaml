@@ -1,0 +1,180 @@
+timed_lamp:
+    alias: "Gartenbeleuchtung 6h an"
+    sequence:
+      # Cancel ev. old timers
+      - service: script.turn_off
+        data:
+           entity_id: script.timer_off
+      - service: switch.turn_on
+        data:
+          entity_id:
+            - switch.garten1
+            - switch.garten2
+      # Set new timer
+      - service: script.turn_on
+        data:
+          entity_id: script.timer_off
+
+timer_off:
+    alias: "Beleuchtung aus nach 8h"
+    sequence:
+      - delay:
+          hours: 6
+      - service: switch.turn_off
+        data:
+          entity_id:
+            - switch.garten1
+            - switch.garten2
+timed_nachtlicht:
+    alias: "Nachttisch 5 Minuten an"
+    sequence:
+      # Cancel ev. old timers
+      - service: script.turn_off
+        data:
+           entity_id: script.timer_off_nachtlicht
+      - service: light.turn_on
+        data:
+          entity_id: light.nachttisch_caro
+      - service: light.turn_on
+        data:
+          entity_id: light.nachttisch_robin
+      # Set new timer
+      - service: script.turn_on
+        data:
+          entity_id: script.timer_off_nachtlicht
+
+timer_off_nachtlicht:
+    alias: "Nachtlicht aus nach 5 min"
+    sequence:
+      - delay:
+          minutes: 5
+      - service: light.turn_off
+        data:
+          entity_id: light.nachttisch_caro
+      - service: light.turn_off
+        data:
+          entity_id: light.nachttisch_robin
+
+timed_esstisch:
+    alias: "Esstisch 5 Sekunden an"
+    sequence:
+      # Cancel ev. old timers
+      - service: script.turn_off
+        data:
+           entity_id: script.timer_off_esstisch
+      - service: scene.turn_on
+        entity_id: scene.esstisch_reset
+
+      # Set new timer
+      - service: script.turn_on
+        data:
+          entity_id: script.timer_off_esstisch
+
+timer_off_esstisch:
+    alias: "Esstisch aus nach 5 Sekunden"
+    sequence:
+      - delay:
+          seconds: 5
+      - service: light.turn_off
+        data:
+          entity_id: light.esstisch
+
+party_hue:
+    alias: "Party_Hue"
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id:
+            - light.gitarre
+            - light.sofa
+          effect: colorloop
+          brightness: 254
+          transition: 1
+hyperionaus:
+    alias: "Hyperion aus"
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id:
+            - light.libreelec
+          rgb_color: ['0','0','0']
+
+#Ventilator Slider
+ventilator_timer_stufe_1:
+    alias: "Ventilator Timer Stufe 1"
+    sequence:
+    - service: switch.turn_on
+      entity_id: switch.ventilator_stufe_1
+    - delay: '{{ states.input_number.ventilator_slider.state | int }}:00:00'
+    - service: switch.turn_off
+      entity_id: switch.ventilator_stufe_1
+    - delay: '00:00:05'
+    - service: switch.turn_off
+      entity_id: switch.ventilator_stufe_1
+    - delay: '00:00:05'
+    - service: switch.turn_off
+      entity_id: switch.ventilator_stufe_1
+
+ventilator_timer_stufe_2:
+    alias: "Ventilator Timer Stufe 2"
+    sequence:
+    - service: switch.turn_on
+      entity_id: switch.ventilator_stufe_2
+    - delay: '{{ states.input_number.ventilator_slider.state | int }}:00:00'
+    - service: switch.turn_off
+      entity_id: switch.ventilator_stufe_2
+    - delay: '00:00:05'
+    - service: switch.turn_off
+      entity_id: switch.ventilator_stufe_2
+    - delay: '00:00:05'
+    - service: switch.turn_off
+      entity_id: switch.ventilator_stufe_2
+
+krimmer_an:
+    alias: "Krimmer an"
+    sequence:
+    - service: switch.turn_on
+      entity_id: switch.krimmer_status
+    - service: remote.send_command
+      entity_id: remote.wohnzimmerhub
+      data:
+        device: "50310083"
+        command:
+          - Einschalten
+        delay_secs: 1
+        num_repeats: 5
+
+krimmer_aus:
+    alias: "Krimmer aus"
+    sequence:
+    - service: switch.turn_off
+      entity_id: switch.krimmer_status
+    - service: remote.send_command
+      entity_id: remote.wohnzimmerhub
+      data:
+        device: "50310083"
+        command:
+          - Ausschalten
+        delay_secs: 1
+        num_repeats: 5
+
+alarm_timer_start:
+    alias: "Alarm Info nach 3 Minuten"
+    sequence:
+      - delay:
+          minutes: 3
+      - service: notify.ios_iphone_robin
+        data:
+          title: "!!!Alarm!!! Bewegung zuhause erkannt !!!Alarm!!!"
+          message: "Bitte Caro kontaktieren und nachfragen!"
+      - service: notify.ios_iphone_caro
+        data:
+          title: "!!!Alarm!!! Bewegung zuhause erkannt !!!Alarm!!!"
+          message: "Bitte Robin kontaktieren und nachfragen!"
+alarm_timer_stop:
+    alias: "Stop alarm Timer"
+    sequence:
+      # Cancel ev. old timers
+      - service: script.turn_off
+        data:
+           entity_id: script.alarm_timer_start

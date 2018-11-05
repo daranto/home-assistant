@@ -1,0 +1,8 @@
+# - id: google_assistant_refresh
+#   alias: Refresh Google Assistant at midnight
+#   initial_state: false
+#   trigger:
+#     - platform: time
+#       at: '00:00:00'
+#   action:
+#     - service: google_assistant.request_sync

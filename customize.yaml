@@ -1,0 +1,112 @@
+sensor.working_time_format_caro:
+  friendly_name: Carolin
+  icon: mdi:timer
+sensor.working_time_format_robin:
+  friendly_name: Robin
+  icon: mdi:timer
+switch.vitrine:
+  icon: mdi:lightbulb
+switch.garten1:
+  friendly_name: Lichtschlange
+  homebridge_visible: true
+  icon: mdi:lightbulb
+scene.licht_an:
+  icon: mdi:lightbulb-outline
+scene.licht_aus:
+  icon: mdi:lightbulb-outline
+switch.ventilator_licht:
+  icon: mdi:lightbulb
+scene.ventilator_aus:
+  icon: mdi:fan
+scene.ventilator_stufe_1:
+  icon: mdi:fan
+scene.ventilator_stufe_4:
+  icon: mdi:fan
+scene.ventilator_stufe_2:
+  icon: mdi:fan
+script.ventilator_timer_stufe_1:
+  icon: mdi:timer
+script.ventilator_timer_stufe_2:
+  icon: mdi:timer
+switch.garten2:
+  friendly_name: Garten Steckdose 2
+  homebridge_visible: true
+  icon: mdi:lightbulb
+media_player.yamahaav:
+  homebridge_hidden: true
+  icon: mdi:boombox
+switch.reboot_hyperion:
+  friendly_name: Ambilight
+script.timed_nachtlicht:
+  icon: mdi:lightbulb
+light.esstisch:
+  homebridge_visible: true
+light.flur:
+  homebridge_visible: true
+light.gitarre:
+  homebridge_visible: true
+light.sofa:
+  homebridge_visible: true
+light.stehlampe:
+  homebridge_visible: true
+sensor.flur_lux:
+  icon: mdi:theme-light-dark
+group.default_view:
+  icon: mdi:home-variant
+group.media_Player_view:
+  icon: mdi:cast
+group.wohnzimmer_view:
+  icon: mdi:television-guide
+group.schlafzimmer_view:
+  icon: mdi:hotel
+group.flur_view:
+  icon: mdi:login
+group.badezimmer_view:
+  icon: mdi:water-pump
+group.garten_view:
+  icon: mdi:flower
+group.automatisierung_view:
+  icon: mdi:tune
+input_slider.ventilator_slider:
+  icon: mdi:clock
+switch.pihole_switch:
+  friendly_name: Adblock aktiv
+  icon: mdi:shield-outline
+sensor.pihole_ads_percentage_blocked_today:
+  friendly_name: Werbung geblockt
+  unit_of_measurement: '%'
+  icon: mdi:do-not-disturb
+sensor.pihole_ads_blocked_today:
+  friendly_name: Werbung geblockt
+  icon: mdi:do-not-disturb
+sensor.pihole_dns_queries_today:
+  friendly_name: DNS Anfragen
+  icon: mdi:note-text
+input_boolean.motion_disabled:
+  friendly_name: Bewegunsmelder deaktiviert
+sensor.wohnzimmer_lux:
+  icon: mdi:theme-light-dark
+group.all_automations:
+  hidden: false
+  friendly_name: Automations
+sensor.wohnzimmer_temperature:
+  icon: mdi:thermometer
+sensor.flur_temperature:
+  icon: mdi:thermometer
+switch.krimmer_kerzen:
+  friendly_name: Krimmer Kerzen
+  icon: mdi:lightbulb
+binary_sensor.motion_flur:
+  icon: mdi:eye
+binary_sensor.motion_wohnzimmer:
+  icon: mdi:eye
+automation.alarm_bewegung_erkannt_keiner_zuhause:
+  homebridge_visible: true
+light.steckdose:
+  homebridge_visible: true
+media_player.tv:
+  icon: mdi:television
+binary_sensor.bewegungsmelder_wz_occupancy:
+  friendly_name: Bewegungsmelder WZ
+binary_sensor.bewegungsmelder_fl_occupancy:
+  friendly_name: Bewegungsmelder FL
